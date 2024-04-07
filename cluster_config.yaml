@@ -1,0 +1,53 @@
+cluster_config:
+  name: k8smd1000
+  nodes:
+    master:
+      quantity: 1
+      cpus: 2
+      memory: 2048
+      networks:
+      - vlan123
+      - vlan64
+    worker:
+      quantity: 1
+      cpus: 1
+      memory: 1024
+      ports:
+      - 12345:12345
+      folders:
+      - folders/worker
+      scripts:
+      - setup_cni.sh
+  f_binding:
+    master:
+    - master # function_name
+    worker:
+    - worker
+  ports:
+    - 33630
+  networks: # Máscara: /24
+    default: # todas as máquinas participam dessa rede
+      network: "192.168.56.0"
+    vlan2:
+      network: "192.168.102.0"
+    vlan123:
+      network: "192.168.123.0"
+  env:
+    K8S_VERSION: 1.29.0-00
+    
+    
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
