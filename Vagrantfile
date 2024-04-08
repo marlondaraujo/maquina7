@@ -4,6 +4,7 @@
 # createNode(obj)
 # obj{quantity,cpus,memory}
 
+require 'fileutils'
 require "yaml"
 
 vagrant_root = File.dirname(File.expand_path(__FILE__))
@@ -121,6 +122,24 @@ def config_node_provisions(cc, machine, params)
   end
 end
 
+def config_node_folders(cc, machine, params)
+  machine.vm.synced_folder (SHARED_PATH + "/"), "/#{SHARED_PATH}"
+ 
+  folders_path = "folders"
+ 
+  folders = params["folders"]
+  if folders
+    folders.each do | f |
+      host_path = folders_path + "/" + f + "/"
+      unless File.directory?(host_path)
+        FileUtils.mkdir_p(host_path)
+      end
+      mount_path = "/" + f
+      machine.vm.synced_folder host_path, mount_path
+    end
+  end
+end
+
 def create_machine(config, cc, node, cp)
   role = node[0]
   params = node[1]
@@ -142,7 +161,7 @@ def create_machine(config, cc, node, cp)
       config_node_networks(cc, machine, params)
       config_node_ports(cc, @cp, machine, params)
       config_node_provisions(cc, machine, params)
-      #config_node_folders(cc, @cp, machine, params)
+      config_node_folders(cc, machine, params)
       #exec_functions(cc, machine, params)
     end 
   end
@@ -153,7 +172,6 @@ end
 ##################################
 Vagrant.configure("2") do |config|
   config.vm.box = BOX_NAME
-  config.vm.synced_folder (SHARED_PATH + "/"), "/#{SHARED_PATH}"
 
   nodes.each do | node |
     create_machine(config, cc, node, @cp)
