@@ -1,1 +1,0 @@
-{"virtualbox":{"/shared":{"guestpath":"/shared","hostpath":"/home/marlon/Estudos/vagrant/maquina7/shared","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/home/marlon/Estudos/vagrant/maquina7","disabled":false,"__vagrantfile":true}}}
