@@ -1,7 +1,7 @@
-SHARED_FOLDER="/shared/scripts/"
+export SHARED_FOLDER="/shared/scripts/"
 
 function import_funcs() {
-  . ${SHARED_FOLDER}functions.sh
+  . ${SHARED_FOLDER}/common/functions.sh
 }
 
 function common() {

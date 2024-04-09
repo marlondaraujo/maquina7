@@ -109,16 +109,23 @@ def exec_functions(cc, machine, node_params)
 
 end
 
-def config_node_provisions(cc, machine, params)
+def config_node_provisions(cc, machine, params, role)
   scripts_folder = "scripts"
 
-  machine.vm.provision "common.sh", privileged: true, type: "shell", path: "./#{scripts_folder}/common.sh"
-  
+ 
+  common_scripts = cc["scripts"]
+
+  if common_scripts
+    common_scripts.each do | s |
+      machine.vm.provision "#{s}", privileged: true, type: "shell", path: "./#{SHARED_PATH}/#{scripts_folder}/common/#{s}"
+    end
+  end
+ 
   scripts = params["scripts"]
 
   if scripts
     scripts.each do | s |
-      machine.vm.provision "#{s}", privileged: true, type: "shell", path: "./#{scripts_folder}/#{s}"
+      machine.vm.provision "#{s}", privileged: true, type: "shell", path: "./#{SHARED_PATH}/#{scripts_folder}/#{role}/#{s}"
     end
   end
 end
@@ -164,7 +171,7 @@ def create_machine(config, cc, node, cp)
       machine.vm.hostname = "#{hostname}"
       config_node_networks(cc, machine, params)
       config_node_ports(cc, @cp, machine, params)
-      config_node_provisions(cc, machine, params)
+      config_node_provisions(cc, machine, params, role)
       config_node_folders(cc, machine, params)
       #exec_functions(cc, machine, params)
     end 
