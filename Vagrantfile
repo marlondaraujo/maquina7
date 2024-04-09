@@ -176,7 +176,8 @@ end
 ##################################
 Vagrant.configure("2") do |config|
   config.vm.box = BOX_NAME
-
+  config.vm.box_check_update = false
+  
   nodes.each do | node |
     create_machine(config, cc, node, @cp)
   end
