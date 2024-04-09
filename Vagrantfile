@@ -12,7 +12,8 @@ cluster_config_data = YAML.load_file "#{vagrant_root}/cluster_config.yaml"
 cc = cluster_config_data["cluster_config"]
 @cp = 61000
 
-CLUSTER_NAME = cc["name"]
+CLUSTER_NAME = cc["name"].strip
+
 BOX_NAME = "ubuntu/focal64"
 SHARED_PATH = "shared"
 
@@ -148,9 +149,11 @@ def create_machine(config, cc, node, cp)
   #puts "params: #{params}"
 
   (0..(params["quantity"]-1)).each do |i|
-    hostname = "#{CLUSTER_NAME}-#{role}-#{i}"
-   
-    #puts "#{hostname}"
+    #hostname = "#{CLUSTER_NAME}-#{role}-#{i}"
+    #hostname = "#{CLUSTER_NAME}#{role}#{i}"
+    hostname = "#{CLUSTER_NAME}-#{role}-#{i}"   
+
+    puts "#{hostname}"
  
     config.vm.define "#{hostname}" do |machine|
       machine.vm.provider "virtualbox" do |vb|
@@ -158,6 +161,7 @@ def create_machine(config, cc, node, cp)
         vb.cpus = params["cpus"]
         vb.memory = params["memory"]
       end
+      machine.vm.hostname = "#{hostname}"
       config_node_networks(cc, machine, params)
       config_node_ports(cc, @cp, machine, params)
       config_node_provisions(cc, machine, params)
