@@ -14,6 +14,7 @@ function common() {
   load_modules
   disable_swap
   setup_cni
+  fix_network_duplicate_ip
 }
 
 common

@@ -5,16 +5,45 @@
 MASTER_IP=$(hostname -I | cut -d' ' -f2)
 NETWORK_CIDR=10.244.0.0/16
 NODENAME=$(hostname -s)
+SHARED_FOLDER=/shared
+CLUSTER_NAME=$(hostname | cut -d- -f1) # k8smd1000-master-0
 
-kubeadm init --apiserver-advertise-address $MASTER_IP --pod-network-cidr=$NETWORK_CIDR --node-name $NODENAME --apiserver-cert-extra-sans=$MASTER_IP
+function init_kubeadm() {
+  kubeadm init --apiserver-advertise-address $MASTER_IP --pod-network-cidr=$NETWORK_CIDR --node-name $NODENAME --apiserver-cert-extra-sans=$MASTER_IP
+}
 
-mkdir -p $HOME/.kube
-sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
+function copy_kubeconfig() {
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-kubeadm token create --print-join-command > /shared/join_command
+  cat /etc/kubernetes/admin.conf > $SHARED_FOLDER/${CLUSTER_NAME}_vagrant.config
+}
 
-kubectl apply -f /shared/kube-flannel.yml
+function generate_joincommand() {
+  kubeadm token create --print-join-command > $SHARED_FOLDER/join_command
+}
+
+function install_flannel() {
+  kubectl apply -f /shared/kube-flannel.yml
+}
+
+function install_network_plugin() {
+  install_flannel
+}
+
+function master() {
+  init_kubeadm
+  copy_kubeconfig
+  generate_joincommand
+  install_network_plugin
+}
+
+master
+
+
+
+
 
 
 
