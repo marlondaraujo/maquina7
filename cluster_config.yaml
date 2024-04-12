@@ -3,7 +3,7 @@ cluster_config:
   nodes:
     master:
       quantity: 1
-      cpus: 2
+      cpus: 3
       memory: 2048
       networks:
       - vlan123

@@ -16,6 +16,7 @@ CLUSTER_NAME = cc["name"].strip
 
 BOX_NAME = "ubuntu/focal64"
 SHARED_PATH = "shared"
+SCRIPTS_PATH = "scripts"
 
 #CLUSTER_NAME="k8smd1000"
 #IP_NW="192.168.56."
@@ -111,13 +112,12 @@ end
 
 def config_node_provisions(cc, machine, params, role)
   scripts_folder = "scripts"
-
  
   common_scripts = cc["scripts"]
 
   if common_scripts
     common_scripts.each do | s |
-      machine.vm.provision "#{s}", privileged: true, type: "shell", path: "./#{SHARED_PATH}/#{scripts_folder}/common/#{s}"
+      machine.vm.provision "#{s}", privileged: true, type: "shell", path: "./#{SCRIPTS_PATH}/#{s}"
     end
   end
  
@@ -125,13 +125,14 @@ def config_node_provisions(cc, machine, params, role)
 
   if scripts
     scripts.each do | s |
-      machine.vm.provision "#{s}", privileged: true, type: "shell", path: "./#{SHARED_PATH}/#{scripts_folder}/#{role}/#{s}"
+      machine.vm.provision "#{s}", privileged: true, type: "shell", path: "./#{SCRIPTS_PATH}/#{s}"
     end
   end
 end
 
 def config_node_folders(cc, machine, params)
   machine.vm.synced_folder (SHARED_PATH + "/"), "/#{SHARED_PATH}"
+  machine.vm.synced_folder (SCRIPTS_PATH + "/"), "/#{SHARED_PATH}/#{SCRIPTS_PATH}"
  
   folders_path = "folders"
  

@@ -1,1 +1,1 @@
-kubeadm join 192.168.56.2:6443 --token mzylyp.omye768j4uq3nd62 --discovery-token-ca-cert-hash sha256:c5015c11742a1403a7cb35d3a51ed1aaf62461a014872ac5f73ad9efdf7397e0 
+kubeadm join 192.168.56.2:6443 --token 79b0ck.sq2jc813dypotd2d --discovery-token-ca-cert-hash sha256:7210fa25ffb4dbc5be8ba0ae7663663baf1ae48e56ee17b5b005adf4f7c66fdc 

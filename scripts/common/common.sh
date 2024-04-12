@@ -1,10 +1,10 @@
-export SHARED_FOLDER="/shared/scripts/"
+#export SHARED_FOLDER="/shared/scripts/"
 
-function import_funcs() {
-  . ${SHARED_FOLDER}/common/functions.sh
-}
+#function import_funcs() {
+#  . ${SHARED_FOLDER}/common/functions.sh
+#}
 
-function common() {
+function start_common() {
   update_and_upgrade
   import_funcs
   add_repos
@@ -17,4 +17,3 @@ function common() {
   fix_network_duplicate_ip
 }
 
-common

@@ -1,0 +1,3 @@
+SHARED_DIR=/shared
+SCRIPTS_DIR=${SHARED_DIR}/scripts
+
