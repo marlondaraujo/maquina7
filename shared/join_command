@@ -1,1 +1,1 @@
-kubeadm join 192.168.56.2:6443 --token 79b0ck.sq2jc813dypotd2d --discovery-token-ca-cert-hash sha256:7210fa25ffb4dbc5be8ba0ae7663663baf1ae48e56ee17b5b005adf4f7c66fdc 
+kubeadm join 192.168.56.2:6443 --token y0q9rv.744zmnc3sksq3vm9 --discovery-token-ca-cert-hash sha256:2abacaf4676c3da3bcc0ae62aa6f149628821af86df38c263e786cf10ec6de84 

@@ -20,11 +20,6 @@ cluster_config:
       - worker
       scripts:
       - worker.sh
-  f_binding:
-    master:
-    - master # function_name
-    worker:
-    - worker
   ports:
     - 33630
   networks: # Máscara: /24
