@@ -10,6 +10,7 @@ require "yaml"
 vagrant_root = File.dirname(File.expand_path(__FILE__))
 cluster_config_data = YAML.load_file "#{vagrant_root}/cluster_config.yaml"
 cc = cluster_config_data["cluster_config"]
+@cc = cc
 @cp = 61000
 
 CLUSTER_NAME = cc["name"].strip
@@ -178,6 +179,20 @@ def create_machine(config, cc, node, cp)
     end 
   end
 end
+
+# Creates cluster env file
+def create_cluster_env()
+  envs = @cc["env"]
+  
+  env_file = "cluster.env"
+  File.open(env_file, "w") do |file|
+    envs.each do |key, value|
+      file.puts "#{key}=#{value}"
+    end
+  end
+end
+
+create_cluster_env
 
 ##################################
 ##       VAGRANT FUNCTION       ##
