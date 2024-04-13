@@ -118,7 +118,9 @@ def config_node_provisions(cc, machine, params, role)
 
   if common_scripts
     common_scripts.each do | s |
-      machine.vm.provision "#{s}", privileged: true, type: "shell", path: "./#{SCRIPTS_PATH}/#{s}"
+      puts @cc["env"]
+      puts "./#{SCRIPTS_PATH}/#{s}"
+      machine.vm.provision "#{s}", privileged: true, type: "shell", path: "./#{SCRIPTS_PATH}/#{s}", env: cc["env"] 
     end
   end
  
@@ -126,7 +128,7 @@ def config_node_provisions(cc, machine, params, role)
 
   if scripts
     scripts.each do | s |
-      machine.vm.provision "#{s}", privileged: true, type: "shell", path: "./#{SCRIPTS_PATH}/#{s}"
+      machine.vm.provision "#{s}", privileged: true, type: "shell", path: "./#{SCRIPTS_PATH}/#{s}", env: cc["env"]
     end
   end
 end
@@ -192,7 +194,7 @@ def create_cluster_env()
   end
 end
 
-create_cluster_env
+#create_cluster_env
 
 ##################################
 ##       VAGRANT FUNCTION       ##
