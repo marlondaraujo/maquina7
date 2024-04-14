@@ -1,8 +1,5 @@
-#export SHARED_FOLDER="/shared/scripts/"
-
-#function import_funcs() {
-#  . ${SHARED_FOLDER}/common/functions.sh
-#}
+echo "scripts/common/common.sh"
+env
 
 function start_common() {
   update_and_upgrade
@@ -16,4 +13,3 @@ function start_common() {
   setup_cni
   fix_network_duplicate_ip
 }
-
