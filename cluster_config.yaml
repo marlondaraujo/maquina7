@@ -1,51 +1,53 @@
 cluster_config:
   name: k8smd1000
   nodes:
-    master:
+    dnsmasq:
       quantity: 1
+      cpus: 1
+      memory: 1048
+      networks:
+        - vlan123
+        - vlan64
+      scripts:
+        - ha_proxy.sh
+    ha_proxy:
+      quantity: 0
+      cpus: 1
+      memory: 1048
+      networks:
+        - vlan123
+        - vlan64
+      scripts:
+        - ha_proxy.sh
+    master:
+      quantity: 0
       cpus: 2
       memory: 2048
       networks:
-      - vlan123
-      - vlan64
+        - vlan123
+        - vlan64
       scripts:
-      - master.sh
+        - master.sh
     worker:
-      quantity: 0 
+      quantity: 0
       cpus: 1
       memory: 1024
       folders:
-      - worker
+        - worker
       scripts:
-      - worker.sh
+        - worker.sh
   ports:
     - 33630
   networks: # Máscara: /24
     default: # todas as máquinas participam dessa rede
-      network: "192.168.56.0"
+      network: '192.168.56.0'
     vlan2:
-      network: "192.168.102.0"
+      network: '192.168.102.0'
     vlan123:
-      network: "192.168.123.0"
+      network: '192.168.123.0'
   scripts:
     - common.sh
   env:
     K8S_VERSION: 1.29.0
     K8S_PACKAGES_VERSION: 1.29.0-1.1
     K8S_SHORT_VERSION: 1.29
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
