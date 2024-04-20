@@ -1,3 +1,5 @@
+set -eux
+
 CATEGORY=common
 
 export SCRIPTS_DIR=/shared/scripts

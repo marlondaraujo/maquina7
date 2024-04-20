@@ -1,9 +1,9 @@
-echo "scripts/common/common.sh"
-env
+#echo "scripts/common/common.sh"
+#env
 
 function start_common() {
   update_and_upgrade
-  import_funcs
+  #import_funcs
   add_repos
   update_and_upgrade
   download_k8s_binaries

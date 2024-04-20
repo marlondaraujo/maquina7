@@ -11,7 +11,7 @@ cluster_config:
       scripts:
       - master.sh
     worker:
-      quantity: 0 
+      quantity: 1 
       cpus: 1
       memory: 1024
       folders:
@@ -30,8 +30,10 @@ cluster_config:
   scripts:
     - common.sh
   env:
-    K8S_VERSION: 1.29.0-00
-    CONTAINERD_VERSION: NOTHING 
+    K8S_VERSION: 1.29.0
+    K8S_PACKAGES_VERSION: 1.29.0-1.1
+    K8S_SHORT_VERSION: 1.29
+ 
  
 
 
