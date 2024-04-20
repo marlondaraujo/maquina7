@@ -11,7 +11,7 @@ cluster_config:
       scripts:
       - master.sh
     worker:
-      quantity: 1 
+      quantity: 0 
       cpus: 1
       memory: 1024
       folders:
